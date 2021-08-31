@@ -1,0 +1,51 @@
+$color-1: #f7f7f7;
+$color-2: #2aa79b;
+$color-3: #e7f7fe;
+$color-4: #ececec;
+$black: #282828;
+$red: #fd5757;
+
+.dynamic-text {
+  position: relative;
+  display: flex;
+
+  .simply {
+    color: $color-4;
+  }
+
+  #text-target {
+    display: flex;
+    width: 300px;
+    text-align: left;
+    animation: color 30s alternate infinite;
+    perspective: 200px;
+    transform: translateX(26px);
+  }
+  .word {
+    position: absolute;
+  }
+  @keyframes color {
+    0% {
+      color: $color-2;
+    }
+    50% {
+      color: $color-4;
+    }
+    100% {
+      color: $color-2;
+    }
+  }
+  .letter {
+    transform: translateZ(200px);
+  }
+  @keyframes anim {
+    25% {
+      transform: translateZ(0px);
+      opacity: 1;
+    }
+    32% {
+      opacity: 0;
+      transform: translateZ(-280px) translateX(200px);
+    }
+  }
+}
