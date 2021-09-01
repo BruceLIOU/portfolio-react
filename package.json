@@ -1,5 +1,6 @@
 {
   "name": "portfolio-react",
+  "homepage": "http://www.bruceliou.fr/",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
