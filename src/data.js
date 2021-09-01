@@ -34,8 +34,7 @@ export const projects = [
 
 export const testimonials = [
   {
-    quote:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa quod necessitatibus quidem impedit facilis? Distinctio laboriosam veritatis recusandae minus. Voluptatum accusantium hic laudantium soluta ea sapiente cupiditate officia maiores itaque.",
+    quote: "Recommandation en cours de rédaction...",
     image: "https://miro.medium.com/fit/c/262/262/1*BFmvPQkxQOfMCcEeXhcWBw.png",
     name: "Xavier Colombel",
     company: "Le Réacteur.io",
