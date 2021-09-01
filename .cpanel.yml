@@ -7,4 +7,4 @@ deployment:
         - /bin cp * $DEPLOYPATH                           #copy all from root 
         #- /bin cp /<sub_folder>/* $DEPLOYPATH             #copy all from sub folder root
         #- /bin/cp -r * $DEPLOYPATH                        #copy all recursively to $DEPLOYPATH
-        - /bin/cp -R public/* $DEPLOYPATH
+        #- /bin/cp -R public/* $DEPLOYPATH
