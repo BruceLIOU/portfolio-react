@@ -26,7 +26,8 @@ export const projects = [
   {
     title: "RefleXartisan",
     subtitle: "Symfony - PHP",
-    description: "Développement de features et mise en production du site.",
+    description:
+      "Développement de features, création de contenus et mise en production du site.",
     image: "./screen_reflexartisan.png",
     link: "https://www.reflexartisan.com/",
   },
