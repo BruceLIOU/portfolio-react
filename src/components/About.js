@@ -1,5 +1,6 @@
 import DynamicText from "../components/DynamicText";
 import CV from "../assets/upload/CV_Bruce-LIOU.pdf";
+import banner from "../assets/img/banner.png";
 
 const About = ({ play }) => {
   return (
@@ -53,7 +54,7 @@ const About = ({ play }) => {
           <img
             className="object-cover object-center rounded"
             alt="hero"
-            src="./coding.svg"
+            src={banner}
           />
         </div>
       </div>
