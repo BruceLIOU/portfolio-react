@@ -1,11 +1,16 @@
 import { useState } from "react";
 import emailjs from "emailjs-com";
 import env from "react-dotenv";
+import ReCAPTCHA from "react-google-recaptcha";
 
 const Contact = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
+
+  const onChange = (value) => {
+    console.log("Captcha value:", value);
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -212,10 +217,10 @@ const Contact = () => {
               value={message}
             />
           </div>
-          <div
-            className="g-recaptcha mx-auto mb-4"
-            data-sitekey="6LeeOTgcAAAAAEuLjE1uzhcLYrt_9SiNUCDW19e4"
-          ></div>
+          <ReCAPTCHA
+            sitekey="6LeeOTgcAAAAAEuLjE1uzhcLYrt_9SiNUCDW19e4"
+            onChange={onChange}
+          />
           <br />
           <input
             className="text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg g-recaptcha"

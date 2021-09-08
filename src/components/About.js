@@ -16,39 +16,25 @@ const About = ({ play }) => {
             Développeur avec des compétences solides en résolution de problèmes.
             <br></br>
             J'aime les challenges techniques et le travail en équipe dans un
-            cadre SCRUM.
+            cadre AGILE.
           </p>
           <div className="btn-group">
-            <a href="#contact" className="btn btn-lg btn-accent">
-              Me contacter
-            </a>
-            <a href="#projects" className="btn btn-lg">
-              Voir mon portfolio
-            </a>
-            <a href={CV} className="btn btn-lg">
-              Télécharger mon CV
-            </a>
-          </div>
-          {/*           <div className="flex justify-center">
             <a
               href="#contact"
-              className="inline-flex text-white bg-green-500 border-0 py-2 px-6 focus:outline-none hover:bg-green-600 rounded text-lg"
+              className="btn btn-lg btn-accent md:btn-sm lg:btn-md xl:btn-lg"
             >
               Me contacter
             </a>
             <a
               href="#projects"
-              className="ml-4 inline-flex text-gray-400 bg-gray-800 border-0 py-2 px-6 focus:outline-none hover:bg-gray-700 hover:text-white rounded text-lg"
+              className="btn btn-lg md:btn-sm lg:btn-md xl:btn-lg"
             >
               Voir mon portfolio
             </a>
-            <a
-              href={CV}
-              className="ml-4 inline-flex text-white bg-info border-0 py-2 px-6 focus:outline-none hover:bg-primary rounded text-lg"
-            >
-              Mon CV
+            <a href={CV} className="btn btn-lg md:btn-sm lg:btn-md xl:btn-lg">
+              Télécharger mon CV
             </a>
-          </div> */}
+          </div>
         </div>
         <div className="lg:max-w-lg lg:w-full md:w-1/2 w-5/6">
           <img
