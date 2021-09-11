@@ -45,7 +45,7 @@ const DynamicText = () => {
   }, []);
 
   return (
-    <span className="dynamic-text">
+    <span className="dynamic-text md:container md:mx-auto flex items-center">
       <span className="simply">Je suis développeur</span>
       <span id="text-target"></span>
     </span>
