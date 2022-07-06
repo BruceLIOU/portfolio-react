@@ -1,5 +1,13 @@
 export const projects = [
   {
+    title: "Site WEB",
+    subtitle: "NEXT.JS & WPGRAPHQL",
+    description:
+      "Refonte du site web de l'agence de communication Studio Orient Express.",
+    image: "./screen_orientexpress.png",
+    link: "http://orientexpress.fr/",
+  },
+  {
     title: "Clone MARVEL",
     subtitle: "MERN Stack",
     description:

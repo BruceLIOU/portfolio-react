@@ -21,17 +21,18 @@ const About = ({ play }) => {
           <div className="btn-group">
             <a
               href="#contact"
-              className="btn btn-lg btn-accent md:btn-sm lg:btn-md xl:btn-lg"
-            >
+              className="btn btn-lg btn-accent md:btn-sm lg:btn-md xl:btn-lg">
               Me contacter
             </a>
             <a
               href="#projects"
-              className="btn btn-lg md:btn-sm lg:btn-md xl:btn-lg"
-            >
+              className="btn btn-lg md:btn-sm lg:btn-md xl:btn-lg">
               Voir mon portfolio
             </a>
-            <a href={CV} className="btn btn-lg md:btn-sm lg:btn-md xl:btn-lg">
+            <a
+              href={CV}
+              target="blank"
+              className="btn btn-lg md:btn-sm lg:btn-md xl:btn-lg">
               Télécharger mon CV
             </a>
           </div>

@@ -1,6 +1,6 @@
 {
-    "Languages": "HTML - CSS - JavaScript - PHP",
-    "Frontend": "React - React Native - Symfony",
-    "Backend": "Node - Express - MongoDB - MySLQ - Apache",
+    "Languages": "HTML - CSS - JavaScript - PHP - MYSQL",
+    "Frontend": "React - React Native - Symfony - Next",
+    "Backend": "Node - Express - MongoDB - MySLQ - Apache - GraphQl",
     "CSS": "Tailwindcss - Bootstrap - Material UI - SASS"
 }
