@@ -11,9 +11,8 @@ permissions:
   contents: read
 
 jobs:
-  build-and-deploy:
+  build:
     runs-on: ubuntu-22.04
-    environment: production
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -22,15 +21,21 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run build
-      - name: Configure deploy key
-        env:
-          DEPLOY_KEY: ${{ secrets.O2SWITCH_PORTFOLIO_DEPLOY_KEY }}
-          O2SWITCH_HOST: ${{ vars.O2SWITCH_HOST }}
-        run: |
-          install -m 700 -d ~/.ssh
-          printf '%s' "$DEPLOY_KEY" > ~/.ssh/o2switch_portfolio
-          chmod 600 ~/.ssh/o2switch_portfolio
-          ssh-keyscan -H "$O2SWITCH_HOST" >> ~/.ssh/known_hosts
+      - run: test -f build/index.html
+      - uses: actions/upload-artifact@v4
+        with:
+          name: production-build-${{ github.sha }}
+          path: build/
+          retention-days: 14
+  deploy:
+    needs: build
+    runs-on: [self-hosted, linux, arm64, o2switch-deploy]
+    environment: production
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: production-build-${{ github.sha }}
+          path: build
       - name: Upload and atomically activate release
         env:
           O2SWITCH_HOST: ${{ vars.O2SWITCH_HOST }}
@@ -40,8 +45,9 @@ jobs:
         run: |
           set -euo pipefail
           REMOTE="$O2SWITCH_USER@$O2SWITCH_HOST"
-          ssh -i ~/.ssh/o2switch_portfolio "$REMOTE" "mkdir -p '$DEPLOY_PATH/releases/$RELEASE_ID' '$DEPLOY_PATH/backups'"
-          rsync -az --delete -e 'ssh -i ~/.ssh/o2switch_portfolio' build/ "$REMOTE:$DEPLOY_PATH/releases/$RELEASE_ID/"
-          ssh -i ~/.ssh/o2switch_portfolio "$REMOTE" "set -e; test -f '$DEPLOY_PATH/releases/$RELEASE_ID/index.html'; if [ -d '$DEPLOY_PATH/build' ]; then tar -C '$DEPLOY_PATH' -czf '$DEPLOY_PATH/backups/build-$(date +%Y%m%d%H%M%S).tgz' build; mv '$DEPLOY_PATH/build' '$DEPLOY_PATH/build.previous'; fi; mv '$DEPLOY_PATH/releases/$RELEASE_ID' '$DEPLOY_PATH/build'; rm -rf '$DEPLOY_PATH/build.previous'"
+          KEY=/home/hermes/.hermes/profiles/pro/deploy/o2switch_portfolio_ed25519
+          ssh -i "$KEY" "$REMOTE" "mkdir -p '$DEPLOY_PATH/releases/$RELEASE_ID' '$DEPLOY_PATH/backups'"
+          rsync -az --delete -e "ssh -i $KEY" build/ "$REMOTE:$DEPLOY_PATH/releases/$RELEASE_ID/"
+          ssh -i "$KEY" "$REMOTE" "set -e; test -f '$DEPLOY_PATH/releases/$RELEASE_ID/index.html'; if [ -d '$DEPLOY_PATH/build' ]; then tar -C '$DEPLOY_PATH' -czf '$DEPLOY_PATH/backups/build-$(date +%Y%m%d%H%M%S).tgz' build; mv '$DEPLOY_PATH/build' '$DEPLOY_PATH/build.previous'; fi; mv '$DEPLOY_PATH/releases/$RELEASE_ID' '$DEPLOY_PATH/build'; rm -rf '$DEPLOY_PATH/build.previous'"
       - name: Smoke test
         run: curl --fail --retry 3 --retry-delay 3 https://www.bruceliou.fr/
