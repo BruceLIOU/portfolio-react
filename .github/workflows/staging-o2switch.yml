@@ -1,0 +1,43 @@
+name: Deploy non-public staging copy
+
+on:
+  push:
+    branches:
+      - chore/o2switch-deploy-pipeline
+  workflow_dispatch:
+
+concurrency:
+  group: portfolio-o2switch-staging
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  stage:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '16.20.2'
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - name: Deploy isolated artifact
+        env:
+          DEPLOY_KEY: ${{ secrets.O2SWITCH_PORTFOLIO_DEPLOY_KEY }}
+          O2SWITCH_HOST: ${{ vars.O2SWITCH_HOST }}
+          O2SWITCH_USER: ${{ vars.O2SWITCH_USER }}
+          STAGING_PATH: /home/grhw2384/staging/portfolio-react
+          RELEASE_ID: ${{ github.sha }}
+        run: |
+          set -euo pipefail
+          install -m 700 -d ~/.ssh
+          printf '%s' "$DEPLOY_KEY" > ~/.ssh/o2switch_portfolio
+          chmod 600 ~/.ssh/o2switch_portfolio
+          ssh-keyscan -H "$O2SWITCH_HOST" >> ~/.ssh/known_hosts
+          REMOTE="$O2SWITCH_USER@$O2SWITCH_HOST"
+          ssh -i ~/.ssh/o2switch_portfolio "$REMOTE" "mkdir -p '$STAGING_PATH/$RELEASE_ID'"
+          rsync -az --delete -e 'ssh -i ~/.ssh/o2switch_portfolio' build/ "$REMOTE:$STAGING_PATH/$RELEASE_ID/"
+          ssh -i ~/.ssh/o2switch_portfolio "$REMOTE" "test -f '$STAGING_PATH/$RELEASE_ID/index.html'"
